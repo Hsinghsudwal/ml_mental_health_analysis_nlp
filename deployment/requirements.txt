@@ -1,0 +1,6 @@
+joblib
+nltk
+scikit-learn
+lightgbm
+streamlit
+boto3

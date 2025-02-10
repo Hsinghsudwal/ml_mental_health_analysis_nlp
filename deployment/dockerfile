@@ -1,0 +1,29 @@
+FROM python:3.9-slim
+
+# Install system dependencies (e.g., libgomp1)
+RUN apt-get update && apt-get install -y \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
+WORKDIR /app
+
+# Install Python dependencies
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
+
+# Install LocalStack and boto3 (for S3 interaction)
+RUN pip install localstack-client boto3
+
+# Copy the application files
+COPY . .
+
+# Copy the model file
+COPY best_model.pkl /app/best_model.pkl
+COPY app.py /app/app.py
+
+# Expose port for Streamlit
+EXPOSE 8501
+
+# Command to run the application
+CMD ["streamlit", "run", "app.py"]
