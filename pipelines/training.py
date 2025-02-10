@@ -1,9 +1,9 @@
 import pandas as pd
 
-from src.ml_nlp_analysis.data_loader import DataLoader
-from src.ml_nlp_analysis.data_transformation import DataTransformation
-from src.ml_nlp_analysis.model_trainer import ModelTrainer
-from src.ml_nlp_analysis.model_evaluation import ModelEvaluation
+from src.ml_mental_health_analysis_nlp.data_loader import DataLoader
+from src.ml_mental_health_analysis_nlp.data_transformation import DataTransformation
+from src.ml_mental_health_analysis_nlp.model_trainer import ModelTrainer
+from src.ml_mental_health_analysis_nlp.model_evaluation import ModelEvaluation
 
 
 def training_pipeline():
