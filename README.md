@@ -163,7 +163,9 @@ Cloud Deployment (Optional):
 AWS S3: The trained model can be stored in AWS S3 (using LocalStack for local testing)
 
 test
+
 makefile
+
 format
 
 
@@ -177,7 +179,7 @@ github_action pipeline
 
 
 
-Access the apps:
+**Access the apps:**
 
 1. On main project directory
 2. `docker-compose up --build`
@@ -208,11 +210,3 @@ Access the apps:
 
 
 
-
-```
-please create dicd pipeline github actions with train iris dataset, create cloud service with localstack s3 bucket and save the train model. and also download s3 bucke model for deployment with streamlit app dockerfile, for monitor also download s3 localstack bucket model streamlit app dockerfile, garfana,premethus, and appy best practices like pylint format where deployment directory has app.py,dockerfile,requirements.txt and monitor directory has monitor_app.py,prometheus.yml,dockerfile-complle.yml and also on the main directory also docker-compose with localstack 
-
-
-
-please create on the main directory name ml_nlp. create cicd pipeline github actions with train iris dataset, create cloud service with localstack s3 bucket and save the train model. and also download s3 bucket model for deployment with streamlit app. for monitor also download s3 localstack bucket model streamlit app, garfana,premethus, and apply best practices like pylint format where deployment directory has app.py,,requirements.txt and monitor directory has monitor_app.py,prometheus.yml, and  has docker-compose.yml file with localstack and directory tree and one docker-compose file
-```
