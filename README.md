@@ -8,8 +8,8 @@
 - [Development](#development)
 - [Orchestration](#orchestration)
 - [Deployment](#deployment)
-- [Monitor](#monitor)
-- [Best Practice](#best_practice)
+- [Monitoring](#monitoring)
+- [Best Practice](#best-practice)
 - [CICD](#cicd)
 
 ## Problem Statement
