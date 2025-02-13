@@ -1,0 +1,85 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      localstack:
+        image: localstack/localstack
+        ports:
+          - 4566:4566
+          - 4510-4559:4510-4559
+        options: --entrypoint="/bin/bash -c 'sleep 9999999'" # To keep LocalStack running
+        env:
+          DOCKER_HOST: unix:///var/run/docker.sock
+          SERVICES: s3,sns,lambda
+        volumes:
+          - "/var/run/docker.sock:/var/run/docker.sock"
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get install docker-compose
+
+      - name: Build Streamlit App Service
+        run: |
+          docker-compose -f docker-compose.yml build streamlit-app
+
+      - name: Run Docker Compose up for LocalStack and Streamlit App
+        run: |
+          docker-compose -f docker-compose.yml up -d
+
+      - name: Wait for LocalStack to be ready
+        run: |
+          curl --silent --max-time 5 --retry 10 --retry-delay 3 --retry-max-time 30 http://localhost:4566/_localstack/health
+
+      - name: Run Tests (if any)
+        run: |
+          # pytest tests/  Streamlit test
+
+      - name: Shut down Docker Compose services
+        run: |
+          docker-compose -f docker-compose.yml down
+
+      - name: Deploy Streamlit App (example, replace with your deploy command)
+        run: |
+          # Add your deployment steps for the Streamlit App
+          # url
+          echo "Deploying Streamlit app"
+          
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Install Dependencies
+  #       run: |
+  #         pip install -r requirements.txt
+
+  #     - name: Run Unit Tests
+  #       run: |
+  #         pytest ml_nlp/src/tests/
+

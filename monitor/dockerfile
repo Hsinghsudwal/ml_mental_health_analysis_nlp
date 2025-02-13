@@ -1,0 +1,30 @@
+FROM python:3.9-slim
+
+
+# Install system dependencies (e.g., libgomp1)
+RUN apt-get update && apt-get install -y \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+
+WORKDIR /monitor
+
+
+COPY requirements.txt /monitor/
+RUN pip install -r requirements.txt
+
+
+RUN pip install localstack-client boto3
+
+
+COPY . .
+
+
+COPY best_model.pkl /monitor/best_model.pkl
+COPY monitor_app.py /monitor/monitor_app.py
+
+
+EXPOSE 8501
+
+
+CMD ["streamlit", "run", "monitor_app.py"]

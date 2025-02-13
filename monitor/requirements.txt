@@ -1,0 +1,10 @@
+streamlit
+joblib
+pandas
+numpy
+boto3
+nltk
+joblib
+matplotlib
+scikit-learn
+lightgbm

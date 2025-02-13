@@ -157,17 +157,17 @@ docker run -p 8501:8501 monitor-app
 ```bash
 http://localhost:8502
 ```
-
+#### Note: Running monitoring locally run `streamlit run monitor_app.py` which works well, but with testing *locastack* it need to upload that temporary data
 ## Best Practice
 Cloud Deployment (Optional):
-AWS S3: The trained model can be stored in AWS S3 (using LocalStack for local testing)
+AWS S3: using LocalStack for testing
 
-test
+**Test**: pytest
 
-makefile
+**Format**: Black *.py
 
-format
-
+**Makefile**: `make format`, python: `make main`, docker: `make localstack`, bucket: `make s3`, streamlit-app: `make deploy`, streamlit-monitor: `make monitor`
+            
 
 ## CICD
 github_action pipeline
@@ -182,23 +182,12 @@ github_action pipeline
 **Access the apps:**
 
 1. On main project directory
-2. `docker-compose up --build`
-3. `python run.py`
+2. `python run.py`
+3. `docker-compose up --build`
 4. `python upload_s3.py`
 5. For deployment Streamlit app will be available at `http://localhost:8501`
 6. For monitoring streamlit app is available at `http://localhost:8502`
 7. LocalStack is available at `http://localhost:4566`.
-
-
-
-
-
-
-
-
-
-
-
 
 
 

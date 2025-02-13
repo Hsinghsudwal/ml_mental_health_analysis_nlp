@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # LocalStack Service
+  localstack:
+    image: localstack/localstack
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=s3,sns,lambda  # Added sns, lambda along with s3 for completeness
+    ports:
+      - "4566:4566"  # LocalStack API gateway
+      - "4510-4559:4510-4559"  # Optional for exposing more ports
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - localstack_network
+
+  # Streamlit App Service for deployment
+  streamlit-app:
+    build: ./deployment  # Assuming your Streamlit app code is in the 'deployment' folder
+    ports:
+      - "8501:8501"
+    depends_on:
+      - localstack  # Ensure LocalStack starts before the Streamlit app
+    environment:
+      - S3_ENDPOINT_URL=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+    networks:
+      - localstack_network
+
+  # Streamlit App Service for monitoring
+  streamlit-app-monitor:
+    build: ./monitor  # Assuming your Streamlit monitor code is in the 'monitor' folder
+    ports:
+      - "8502:8501"  # Expose monitoring app on port 8502
+    depends_on:
+      - localstack  # Ensure LocalStack starts before the Streamlit app
+    environment:
+      - S3_ENDPOINT_URL=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+    networks:
+      - localstack_network
+
+# Network Configuration
+networks:
+  localstack_network:
+    driver: bridge
+  monitoring:
+    driver: bridge
