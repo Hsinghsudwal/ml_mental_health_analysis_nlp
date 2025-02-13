@@ -172,14 +172,7 @@ AWS S3: using LocalStack for testing
 ## CICD
 github_action pipeline
 
-
-
-
-
-
-
-
-**Access the apps:**
+### Access the apps
 
 1. On main project directory
 2. `python run.py`
@@ -188,6 +181,15 @@ github_action pipeline
 5. For deployment Streamlit app will be available at `http://localhost:8501`
 6. For monitoring streamlit app is available at `http://localhost:8502`
 7. LocalStack is available at `http://localhost:4566`.
+
+
+
+
+
+
+
+
+
 
 
 
